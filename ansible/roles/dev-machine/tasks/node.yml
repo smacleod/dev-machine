@@ -1,0 +1,9 @@
+---
+- name: Install nodesource binary distribution
+  shell: "curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -"
+
+- name: Uninstall old versions of Docker
+  apt:
+    name: nodejs
+    state: present
+  become: yes
