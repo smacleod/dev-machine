@@ -1,0 +1,28 @@
+---
+- name: Install dotfiles dependencies
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - vim
+  become: yes
+
+- name: Clone dotfiles.
+  git:
+    repo: "https://github.com/smacleod/dotfiles"
+    dest: "/home/{{ username }}/.dotfiles"
+    update: yes
+
+- name: Delete already present dotfiles
+  file:
+    path: "/home/{{ username }}{{ item }}"
+    state: absent
+  with_items:
+    - ".bashrc"
+    - ".profile"
+    - ".bash_profile"
+
+- name: Install dotfiles
+  shell: "./install"
+  args:
+    chdir: "/home/{{ username }}/.dotfiles"
