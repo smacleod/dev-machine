@@ -9,6 +9,7 @@
     - libtool
     - python-dev
     - libssl-dev
+    - pkg-config
   become: yes
 
 - name: Clone watchman.
