@@ -1,0 +1,38 @@
+---
+- name: Install build dependencies for watchman
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - autoconf
+    - automake
+    - libtool
+    - python-dev
+    - libssl-dev
+  become: yes
+
+- name: Clone watchman.
+  git:
+    repo: "https://github.com/facebook/watchman.git"
+    dest: "/home/{{ username }}/watchman"
+    version: v4.9.0
+
+- name: Run autogen
+  shell: "./autogen.sh"
+  args:
+    chdir: "/home/{{ username }}/watchman"
+
+- name: Run configure
+  shell: "./configure"
+  args:
+    chdir: "/home/{{ username }}/watchman"
+
+- name: Build watchman
+  shell: "make"
+  args:
+    chdir: "/home/{{ username }}/watchman"
+
+- name: Install watchman
+  shell: "sudo make install"
+  args:
+    chdir: "/home/{{ username }}/watchman"
