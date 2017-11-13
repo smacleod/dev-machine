@@ -1,0 +1,56 @@
+---
+- name: Uninstall old versions of Docker
+  apt:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - docker
+    - docker-engine
+    - docker.io
+  become: yes
+
+- name: Install packages for repository over https
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - software-properties-common
+  become: yes
+
+- name: Install Docker's official GPG key
+  shell: "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -"
+
+- name: Add Docker repository
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename|lower }} stable edge test"
+    update_cache: yes
+    state: present
+  become: yes
+
+- name: Install Docker
+  apt:
+    name: docker-ce
+    state: present
+  become: yes
+
+- name: Add the docker group
+  group:
+    name: docker
+    state: present
+  become: yes
+
+- name: Add user to the docker group
+  user:
+    append: yes
+    groups:
+      - docker
+    name: {{ username }}
+  become: yes
+
+- name: Enable docker
+  service:
+    name: docker
+    enabled: yes
