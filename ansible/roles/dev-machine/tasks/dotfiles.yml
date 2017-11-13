@@ -15,7 +15,7 @@
 
 - name: Delete already present dotfiles
   file:
-    path: "/home/{{ username }}{{ item }}"
+    path: "/home/{{ username }}/{{ item }}"
     state: absent
   with_items:
     - ".bashrc"
