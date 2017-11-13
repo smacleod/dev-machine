@@ -2,4 +2,6 @@
 - import_tasks: docker.yml
 - import_tasks: node.yml
 - import_tasks: nuclide.yml
+- import_tasks: python.yml
+- import_tasks: invoke.yml
 - import_tasks: watchman.yml

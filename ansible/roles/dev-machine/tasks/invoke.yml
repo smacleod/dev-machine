@@ -1,0 +1,7 @@
+---
+- name: Install pyinvoke
+  pip:
+    name: invoke
+    version: 0.13.0
+    state: present
+    extra_args: --user
