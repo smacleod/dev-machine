@@ -1,0 +1,6 @@
+---
+- name: Install nuclide node.js package globally.
+  npm:
+    name: nuclide
+    global: yes
+  become: yes
