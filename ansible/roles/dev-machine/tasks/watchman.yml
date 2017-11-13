@@ -34,6 +34,7 @@
     chdir: "/home/{{ username }}/watchman"
 
 - name: Install watchman
-  shell: "sudo make install"
+  shell: "make install"
   args:
     chdir: "/home/{{ username }}/watchman"
+  become: yes
