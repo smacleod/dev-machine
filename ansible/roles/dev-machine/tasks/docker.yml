@@ -12,6 +12,7 @@
 - name: Install packages for repository over https
   apt:
     name: "{{ item }}"
+
     state: present
   with_items:
     - apt-transport-https
@@ -47,7 +48,7 @@
     append: yes
     groups:
       - docker
-    name: {{ username }}
+    name: "{{ username }}"
   become: yes
 
 - name: Enable docker
