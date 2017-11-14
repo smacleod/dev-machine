@@ -5,3 +5,14 @@
     version: 0.13.0
     state: present
     extra_args: --user
+
+- name: Make sure src directory exist.
+  file:
+    path: /home/{{ username }}/src/
+    state: directory
+    mode: 0755
+
+- name: Clone invoke for bash completion.
+  git:
+    repo: "https://github.com/pyinvoke/invoke"
+    dest: "/home/{{ username }}/src/invoke"
