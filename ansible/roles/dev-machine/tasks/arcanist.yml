@@ -8,12 +8,17 @@
     - git
   become: yes
 
+- name: Make sure src directory exist.
+  file:
+    path: /home/{{ username }}/src
+    state: directory
+    mode: 0755
+
 - name: Make sure phabricator-utils directory exist.
   file:
     path: /home/{{ username }}/src/phabricator-utils
     state: directory
     mode: 0755
-    recurse: yes
 
 - name: Clone libphutil.
   git:
