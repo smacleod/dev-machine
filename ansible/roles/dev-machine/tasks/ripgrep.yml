@@ -1,0 +1,19 @@
+---
+- name: Make sure bin directory exist.
+  file:
+    path: /home/{{ username }}/bin
+    state: directory
+    mode: 0755
+
+- name: Download and extract ripgrep
+  unarchive:
+    src: https://github.com/BurntSushi/ripgrep/releases/download/0.7.1/ripgrep-0.7.1-x86_64-unknown-linux-musl.tar.gz
+    dest: "/home/{{ username }}/bin"
+    remote_src: yes
+    creates: "/home/{{ username }}/bin/ripgrep-0.7.1-x86_64-unknown-linux-musl/rg"
+
+- name: Link bin/rg to ripgrep
+  file:
+    src: "/home/{{ username }}/bin/ripgrep-0.7.1-x86_64-unknown-linux-musl/rg"
+    dest: "/home/{{ username }}/bin/rg"
+    state: link
