@@ -1,0 +1,6 @@
+---
+- name: Install Mercurial
+  pip:
+    name: Mercurial
+    state: latest
+    extra_args: --user
