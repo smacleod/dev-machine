@@ -12,29 +12,35 @@
     - pkg-config
   become: yes
 
+- name: Make sure src directory exists.
+  file:
+    path: /home/{{ username }}/src
+    state: directory
+    mode: 0755
+
 - name: Clone watchman.
   git:
     repo: "https://github.com/facebook/watchman.git"
-    dest: "/home/{{ username }}/watchman"
+    dest: "/home/{{ username }}/src/watchman"
     version: v4.9.0
 
 - name: Run autogen
   shell: "./autogen.sh"
   args:
-    chdir: "/home/{{ username }}/watchman"
+    chdir: "/home/{{ username }}/src/watchman"
 
 - name: Run configure
   shell: "./configure"
   args:
-    chdir: "/home/{{ username }}/watchman"
+    chdir: "/home/{{ username }}/src/watchman"
 
 - name: Build watchman
   shell: "make"
   args:
-    chdir: "/home/{{ username }}/watchman"
+    chdir: "/home/{{ username }}/src/watchman"
 
 - name: Install watchman
   shell: "make install"
   args:
-    chdir: "/home/{{ username }}/watchman"
+    chdir: "/home/{{ username }}/src/watchman"
   become: yes

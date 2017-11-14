@@ -1,0 +1,26 @@
+---
+- name: Install system dependencies
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - php
+    - git
+  become: yes
+
+- name: Make sure phabricator-utils directory exist.
+  file:
+    path: /home/{{ username }}/src/phabricator-utils
+    state: directory
+    mode: 0755
+    recurse: yes
+
+- name: Clone libphutil.
+  git:
+    repo: "https://github.com/phacility/libphutil.git"
+    dest: "/home/{{ username }}/src/phabricator-utils/libphutil"
+
+- name: Clone arcanist.
+  git:
+    repo: "https://github.com/phacility/arcanist.git"
+    dest: "/home/{{ username }}/src/phabricator-utils/arcanist"
